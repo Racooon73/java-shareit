@@ -33,8 +33,7 @@ public class InMemoryUserStorage implements UserStorage {
     public User get(long id) throws NotFoundException {
         if (userMap.containsKey(id)) {
             return userMap.get(id);
-        }
-        else throw new NotFoundException();
+        } else throw new NotFoundException();
     }
 
     @Override
@@ -67,7 +66,7 @@ public class InMemoryUserStorage implements UserStorage {
         List<User> list = new ArrayList<>(getAll());
 
         for (User user : list) {
-            if(email.equals(user.getEmail()) && user.getId() != id){
+            if (email.equals(user.getEmail()) && user.getId() != id) {
                 return false;
             }
         }
