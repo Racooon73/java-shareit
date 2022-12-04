@@ -18,6 +18,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+
     @PostMapping
     public User add(@Valid @RequestBody User user) throws BadRequestException {
         return userService.add(user);
@@ -29,9 +30,10 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
+
     @PatchMapping(value = "/{id}")
     public User update(@RequestBody User user, @PathVariable long id) {
         return userService.update(user, id);

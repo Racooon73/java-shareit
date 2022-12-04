@@ -17,16 +17,19 @@ public class ExceptionsHandler {
     public Map<String, String> notFound(final NotFoundException e) {
         return Map.of("", e.getMessage());
     }
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
     public Map<String, String> notValid(final ConflictException e) {
         return Map.of("", e.getMessage());
     }
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Map<String, String> exception(final Exception e) {
         return Map.of("", e.getMessage());
     }
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> notValid(final BadRequestException e) {

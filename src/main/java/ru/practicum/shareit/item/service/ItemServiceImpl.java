@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class ItemServiceImpl implements ItemService{
+public class ItemServiceImpl implements ItemService {
 
     private final ItemStorage itemStorage;
     private final UserStorage userStorage;
@@ -35,7 +35,7 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
-    public List<ItemDto> getAllItemsByOwner(long ownerId){
+    public List<ItemDto> getAllItemsByOwner(long ownerId) {
         return itemStorage.getAllItemsByOwner(ownerId);
     }
 

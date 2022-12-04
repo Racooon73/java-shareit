@@ -13,7 +13,8 @@ public class ItemMapper {
 
         );
     }
-    public static Item toItem(ItemDto dto, User owner){
+
+    public static Item toItem(ItemDto dto, User owner) {
         return new Item(dto.getId(),
                 dto.getName(),
                 dto.getDescription(),

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class InMemoryItemStorage implements ItemStorage{
+public class InMemoryItemStorage implements ItemStorage {
 
     Map<Long, Item> items = new HashMap<>();
     long id = 1;
@@ -30,17 +30,17 @@ public class InMemoryItemStorage implements ItemStorage{
 
     @Override
     public ItemDto patchItem(ItemDto dto, User owner, long itemId) throws NotFoundException {
-        if(getItemOwnerId(itemId) != owner.getId()){
+        if (getItemOwnerId(itemId) != owner.getId()) {
             throw new NotFoundException();
         }
         Item oldItem = items.get(itemId);
-        if(dto.getName() == null){
+        if (dto.getName() == null) {
             dto.setName(oldItem.getName());
         }
-        if(dto.getDescription() == null){
+        if (dto.getDescription() == null) {
             dto.setDescription(oldItem.getDescription());
         }
-        if(dto.getAvailable() == null){
+        if (dto.getAvailable() == null) {
             dto.setAvailable(oldItem.isAvailable());
         }
         dto.setId(itemId);
@@ -49,7 +49,7 @@ public class InMemoryItemStorage implements ItemStorage{
         return toItemDto(items.get(itemId));
     }
 
-    public long getItemOwnerId(long itemId){
+    public long getItemOwnerId(long itemId) {
         return items.get(itemId).getOwner().getId();
     }
 
@@ -62,7 +62,7 @@ public class InMemoryItemStorage implements ItemStorage{
     public List<ItemDto> getAllItemsByOwner(long ownerId) {
         List<ItemDto> allItems = new ArrayList<>();
         for (Item item : items.values()) {
-            if(item.getOwner().getId() == ownerId){
+            if (item.getOwner().getId() == ownerId) {
                 allItems.add(toItemDto(item));
             }
         }
@@ -73,11 +73,10 @@ public class InMemoryItemStorage implements ItemStorage{
     public List<ItemDto> searchItem(String text, long ownerId) {
         List<ItemDto> foundItems = new ArrayList<>();
         for (Item item : items.values()) {
-            if(item.isAvailable() && !text.equals("")){
-                if(item.getName().toLowerCase().contains(text) || item.getDescription().toLowerCase().contains(text)
-                    ){
-               foundItems.add(toItemDto(item));
-            }
+            if (item.isAvailable() && !text.equals("")) {
+                if (item.getName().toLowerCase().contains(text) || item.getDescription().toLowerCase().contains(text)) {
+                    foundItems.add(toItemDto(item));
+                }
             }
         }
         return foundItems;

@@ -9,18 +9,19 @@ import ru.practicum.shareit.user.model.User;
 import java.util.*;
 
 @Component
-public class InMemoryUserStorage implements UserStorage{
+public class InMemoryUserStorage implements UserStorage {
 
     Map<Long, User> userMap = new HashMap<>();
     long id = 1;
+
     @Override
     public User add(User user) throws BadRequestException {
 
-        if(user.getEmail() == null){
+        if (user.getEmail() == null) {
             throw new BadRequestException();
         }
         user.setId(id);
-        if(!isUniqueEmail(user.getEmail(), user.getId())){
+        if (!isUniqueEmail(user.getEmail(), user.getId())) {
             throw new ConflictException();
         }
         userMap.put(user.getId(), user);
@@ -30,7 +31,7 @@ public class InMemoryUserStorage implements UserStorage{
 
     @Override
     public User get(long id) throws NotFoundException {
-        if(userMap.containsKey(id)){
+        if (userMap.containsKey(id)) {
             return userMap.get(id);
         }
         else throw new NotFoundException();
@@ -44,13 +45,13 @@ public class InMemoryUserStorage implements UserStorage{
     @Override
     public User update(User user, long id) {
         user.setId(id);
-        if(user.getName() == null){
+        if (user.getName() == null) {
             user.setName(userMap.get(id).getName());
         }
-        if(user.getEmail() == null){
+        if (user.getEmail() == null) {
             user.setEmail(userMap.get(id).getEmail());
         }
-        if(!isUniqueEmail(user.getEmail(), user.getId())){
+        if (!isUniqueEmail(user.getEmail(), user.getId())) {
             throw new ConflictException();
         }
         userMap.put(id, user);

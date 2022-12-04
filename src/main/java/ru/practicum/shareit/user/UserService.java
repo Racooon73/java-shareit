@@ -1,10 +1,8 @@
 package ru.practicum.shareit.user;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exception.BadRequestException;
-import ru.practicum.shareit.exception.ConflictException;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.storage.UserStorage;
@@ -27,7 +25,7 @@ public class UserService {
         return userStorage.get(id);
     }
 
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return new ArrayList<>(userStorage.getAll());
     }
 
