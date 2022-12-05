@@ -7,7 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ru.practicum.shareit.exception.BadRequestException;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.item.dto.ItemDto;
-import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.service.ItemService;
 import ru.practicum.shareit.item.service.ItemServiceImpl;
 import ru.practicum.shareit.item.storage.InMemoryItemStorage;
@@ -55,7 +54,7 @@ class ShareItTests {
 	void deleteUser() throws BadRequestException {
 		userService.add(user);
 		userService.delete(1);
-		Assertions.assertThrows(NotFoundException.class,()->userService.getUserById(1));
+		Assertions.assertThrows(NotFoundException.class,() -> userService.getUserById(1));
 	}
 
 	@Test
