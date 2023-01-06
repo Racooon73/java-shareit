@@ -40,8 +40,8 @@ public class BookingServiceImpl implements BookingService {
         if (itemRepository.findById(dto.getItemId()).get().isAvailable()
                 && dto.getEnd().isAfter(dto.getStart())) {
             return BookingMapper.toFullBookingFromBooking(
-                    bookingRepository.save(BookingMapper.toBooking(dto, bookerId, Status.WAITING))
-                    , Status.WAITING, itemRepository, userRepository);
+                    bookingRepository.save(BookingMapper.toBooking(dto, bookerId, Status.WAITING)),
+                    Status.WAITING, itemRepository, userRepository);
         } else {
             throw new BadRequestException();
         }
@@ -49,8 +49,8 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public FullBookingDto approveBooking(long bookingId, boolean approved, long itemOwnerId) throws BadRequestException {
-        if (itemRepository.findById(bookingRepository.findById(bookingId).get().
-                getItemId()).get().getOwnerId() != itemOwnerId) {
+        if (itemRepository.findById(bookingRepository.findById(bookingId).get()
+                .getItemId()).get().getOwnerId() != itemOwnerId) {
             throw new NotFoundException();
         }
         if (bookingRepository.findById(bookingId).isPresent()) {
