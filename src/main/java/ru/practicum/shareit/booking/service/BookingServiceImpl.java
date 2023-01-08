@@ -25,9 +25,9 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class BookingServiceImpl implements BookingService {
 
-    BookingRepository bookingRepository;
-    UserRepository userRepository;
-    ItemRepository itemRepository;
+    private final BookingRepository bookingRepository;
+    private final UserRepository userRepository;
+    private final ItemRepository itemRepository;
 
     @Override
     public FullBookingDto addBooking(BookingDto dto, long bookerId) throws BadRequestException {

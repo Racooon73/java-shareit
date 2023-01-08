@@ -1,9 +1,6 @@
 package ru.practicum.shareit.booking.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ru.practicum.shareit.booking.model.enums.Status;
 
 import javax.persistence.*;
@@ -12,7 +9,8 @@ import java.time.LocalDateTime;
 /**
  * TODO Sprint add-bookings.
  */
-@Data
+@Getter
+@Setter
 @Builder
 @Entity
 @Table(name = "Bookings")

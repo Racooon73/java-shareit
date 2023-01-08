@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UserService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public User add(User user) throws BadRequestException {
         log.info("Добавлен новый пользователь");

@@ -10,11 +10,6 @@ import ru.practicum.shareit.exception.BadRequestException;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.item.dto.GetItemDto;
 import ru.practicum.shareit.item.dto.ItemDto;
-
-import static ru.practicum.shareit.item.dto.ItemMapper.toItem;
-import static ru.practicum.shareit.item.dto.ItemMapper.toItemDto;
-import static ru.practicum.shareit.item.dto.ItemMapper.toGetItemDto;
-
 import ru.practicum.shareit.item.dto.ItemMapper;
 import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.model.Item;
@@ -24,8 +19,11 @@ import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.storage.UserRepository;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static ru.practicum.shareit.item.dto.ItemMapper.*;
 
 @Slf4j
 @Service
@@ -35,7 +33,6 @@ public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
     private final BookingRepository bookingRepository;
-
     private final CommentRepository commentRepository;
 
     @Override
@@ -106,13 +103,26 @@ public class ItemServiceImpl implements ItemService {
                 itemRepository.findAll().stream()
                         .filter(l -> l.getOwnerId() == ownerId)
                         .map(l -> ItemMapper.toGetItemDto(l, null, null, null))
+                        .sorted(Comparator.comparing(GetItemDto::getId))
                         .collect(Collectors.toList());
 
+        List<Comment> allCommentsByItemsOwner = commentRepository.findAllByItemsOwnerId(ownerId);
+        List<Booking> allBookingsByItemsOwner = bookingRepository.findAllByItemsOwnerId(ownerId,
+                Sort.by(Sort.Direction.ASC, "start"));
+
         for (GetItemDto item : allItems) {
-            List<Comment> comments = commentRepository.findAllByItemId(item.getId());
+
+            List<Comment> comments = allCommentsByItemsOwner
+                    .stream()
+                    .filter(l -> l.getItemId() == item.getId())
+                    .collect(Collectors.toList());
             item.setComments(comments);
-            List<Booking> bookings = bookingRepository.allBookingsForItem(item.getId(),
-                    Sort.by(Sort.Direction.ASC, "start"));
+
+            List<Booking> bookings = allBookingsByItemsOwner
+                    .stream()
+                    .filter(l -> l.getItemId() == item.getId())
+                    .collect(Collectors.toList());
+
             if (bookings.size() != 0) {
                 item.setLastBooking(bookings.get(0));
                 item.setNextBooking(bookings.get(bookings.size() - 1));
@@ -144,7 +154,6 @@ public class ItemServiceImpl implements ItemService {
 
 
             User author = userRepository.findById(authorId).get();
-            Item item = itemRepository.findById(itemId).get();
             Comment comment = new Comment();
             comment.setAuthorId(authorId);
             comment.setItemId(itemId);
