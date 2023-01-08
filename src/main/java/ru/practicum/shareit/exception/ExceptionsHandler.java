@@ -16,6 +16,7 @@ public class ExceptionsHandler {
         String error = "Unknown " + e.getName() + ": " + e.getValue();
         return ResponseEntity.status(400).body(new ErrorResponse(error));
     }
+
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> notFoundException(final NotFoundException e) {
         log.error("NotFoundException ");
