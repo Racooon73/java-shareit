@@ -20,6 +20,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -69,6 +70,28 @@ public class UserServiceTest {
         when(userRepository.findById(userId))
                 .thenReturn(Optional.empty());
         assertThrows(NotFoundException.class, () -> userService.getUserById(userId));
+    }
+
+    @Test
+    void updateUserByIdNotFound() {
+        long userId = 0L;
+        UserDto dto = new UserDto(userId, null, "test@test.com");
+        User expectedUser = UserMapper.toUser(dto);
+
+        when(userRepository.findById(anyLong()))
+                .thenReturn(Optional.empty());
+        assertThrows(NotFoundException.class, () -> userService.update(expectedUser, 1));
+    }
+
+    @Test
+    void updateUserByIdNotFoundNoEmail() {
+        long userId = 0L;
+        UserDto dto = new UserDto(userId, "test", null);
+        User expectedUser = UserMapper.toUser(dto);
+
+        when(userRepository.findById(anyLong()))
+                .thenReturn(Optional.empty());
+        assertThrows(NotFoundException.class, () -> userService.update(expectedUser, 1));
     }
 
     @Test
