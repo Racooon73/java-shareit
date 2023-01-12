@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import ru.practicum.shareit.booking.dto.BookingDto;
 import ru.practicum.shareit.booking.dto.BookingMapper;
+import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.model.enums.BookingState;
 import ru.practicum.shareit.booking.model.enums.Status;
 import ru.practicum.shareit.booking.service.BookingServiceImpl;
@@ -27,6 +28,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -42,6 +44,8 @@ public class BookingServiceTest {
     private ItemRepository itemRepository;
     @InjectMocks
     BookingServiceImpl bookingService;
+    @InjectMocks
+    BookingMapper mapper;
 
     @Test
     void addBooking() throws NotFoundException, BadRequestException {
@@ -183,4 +187,19 @@ public class BookingServiceTest {
         assertThrows(NoSuchElementException.class, () -> bookingService.getAllBookingByItemsByOwnerId(1,
                 BookingState.REJECTED, 0, 10));
     }
+
+    @Test
+    void fullBookingTest() {
+        User newUser = new User(1, "test", "test@test.com");
+        ItemDto itemDto = new ItemDto(1, "TestItem", "DescriptionTest", true, 0);
+        Item item = ItemMapper.toItem(itemDto, 1);
+        Booking booking = new Booking(1, LocalDateTime.MIN, LocalDateTime.now(), 1, 1, Status.WAITING);
+        when(userRepository.findById(anyLong()))
+                .thenReturn(Optional.of(newUser));
+        when(itemRepository.findById(anyLong()))
+                .thenReturn(Optional.of(item));
+        assertEquals(1, mapper.toFullBookingFromBooking(booking,
+                Status.WAITING, itemRepository, userRepository).getId());
+    }
+
 }

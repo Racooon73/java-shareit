@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.practicum.shareit.exception.BadRequestException;
+import ru.practicum.shareit.exception.ConflictException;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.user.UserService;
 import ru.practicum.shareit.user.dto.UserDto;
@@ -37,6 +38,16 @@ public class UserServiceTest {
                 .thenReturn(expectedUser);
         User actualUser = userService.add(expectedUser);
         assertEquals(expectedUser, actualUser);
+
+    }
+    @Test
+    void addNewUserDuplicateEmail() throws BadRequestException, NotFoundException {
+        long userId = 0L;
+        User expectedUser = new User(userId, "Test", "test@test.com");
+        when(userRepository.save(any()))
+                .thenThrow(ConflictException.class);
+
+        assertThrows(ConflictException.class,()->userService.add(expectedUser));
 
     }
 
