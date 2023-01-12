@@ -21,12 +21,14 @@ public class ItemMapper {
     }
 
     public static ItemDto toItemDto(Item item) {
-        return new ItemDto(item.getId(),
-                item.getName(),
-                item.getDescription(),
-                item.isAvailable()
+        return ItemDto.builder()
+                .id(item.getId())
+                .available(item.isAvailable())
+                .description(item.getDescription())
+                .name(item.getName())
+                .requestId(item.getRequestId())
+                .build();
 
-        );
     }
 
     public static Item toItem(ItemDto dto, long owner) {
@@ -35,7 +37,7 @@ public class ItemMapper {
                 dto.getDescription(),
                 dto.getAvailable(),
                 owner,
-                0
+                dto.getRequestId()
         );
     }
 
