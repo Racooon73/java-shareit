@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import ru.practicum.shareit.booking.BookingController;
 import ru.practicum.shareit.booking.dto.BookingDto;
 import ru.practicum.shareit.booking.dto.FullBookingDto;
@@ -177,6 +178,28 @@ public class BookingControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+
+    }
+
+    @Test
+    void getAllBookingItemsUnsupportedStatus() throws Exception {
+        final BookingDto bookingDto = new BookingDto();
+        bookingDto.setId(1);
+        bookingDto.setItemId(1);
+        bookingDto.setStart(LocalDateTime.now());
+        bookingDto.setEnd(LocalDateTime.now().plusHours(1));
+        ItemDto itemDto = new ItemDto(1, "test", "testtest", true, 0);
+
+        when(bookingService.getAllBookingByItemsByOwnerId(anyLong(), any(), anyInt(), anyInt()))
+                .thenThrow(MethodArgumentTypeMismatchException.class);
+
+        mvc.perform(get("/bookings/owner")
+                        .header("X-Sharer-User-Id", "1")
+                        .content(mapper.writeValueAsString(bookingDto))
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
 
     }
 }
