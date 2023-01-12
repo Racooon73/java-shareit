@@ -40,6 +40,7 @@ public class UserServiceTest {
         assertEquals(expectedUser, actualUser);
 
     }
+
     @Test
     void addNewUserDuplicateEmail() throws BadRequestException, NotFoundException {
         long userId = 0L;
@@ -47,7 +48,7 @@ public class UserServiceTest {
         when(userRepository.save(any()))
                 .thenThrow(ConflictException.class);
 
-        assertThrows(ConflictException.class,()->userService.add(expectedUser));
+        assertThrows(ConflictException.class, () -> userService.add(expectedUser));
 
     }
 

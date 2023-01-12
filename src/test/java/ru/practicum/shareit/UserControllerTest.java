@@ -123,10 +123,11 @@ public class UserControllerTest {
                 .andExpect(status().isOk());
 
     }
+
     @Test
     void updateUser() throws Exception {
         final User userDto = new User(1, "test", "test@test.com");
-        when(userService.update(any(),anyLong()))
+        when(userService.update(any(), anyLong()))
                 .thenReturn(userDto);
 
         mvc.perform(patch("/users/1")
