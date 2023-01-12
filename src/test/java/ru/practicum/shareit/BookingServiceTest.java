@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -105,6 +104,7 @@ public class BookingServiceTest {
         assertThrows(NoSuchElementException.class, () -> bookingService.getBooking(1, bookerId));
 
     }
+
     @Test
     void getBookingNotFound() throws NotFoundException, BadRequestException {
         long itemId = 1L;
@@ -164,6 +164,7 @@ public class BookingServiceTest {
                 BookingState.REJECTED, 0, 10));
 
     }
+
     @Test
     void getAllBookingsNotFoundUser() throws NotFoundException, BadRequestException {
         long itemId = 1L;
@@ -241,7 +242,6 @@ public class BookingServiceTest {
                 .thenReturn(Optional.empty());
 
 
-
         assertThrows(NotFoundException.class, () -> bookingService.getAllBookingByItemsByOwnerId(1,
                 BookingState.REJECTED, 0, 10));
     }
@@ -255,7 +255,7 @@ public class BookingServiceTest {
         when(userRepository.findById(anyLong()))
                 .thenReturn(Optional.empty());
 
-        assertThrows(NotFoundException.class,()-> bookingService.getAllBookingByItemsByOwnerId(1,
+        assertThrows(NotFoundException.class, () -> bookingService.getAllBookingByItemsByOwnerId(1,
                 BookingState.REJECTED, 0, 10));
     }
 
