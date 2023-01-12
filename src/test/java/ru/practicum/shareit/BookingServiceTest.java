@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -257,6 +258,22 @@ public class BookingServiceTest {
 
         assertThrows(NotFoundException.class, () -> bookingService.getAllBookingByItemsByOwnerId(1,
                 BookingState.REJECTED, 0, 10));
+    }
+
+    @Test
+    void bookingMapperTest() {
+        User newUser = new User(1, "test", "test@test.com");
+        ItemDto itemDto = new ItemDto(1, "TestItem", "DescriptionTest", true, 0);
+        Item item = ItemMapper.toItem(itemDto, 1);
+        Booking booking = new Booking(1, LocalDateTime.MIN, LocalDateTime.now(), 1, 1, Status.WAITING);
+        when(userRepository.findById(anyLong()))
+                .thenReturn(Optional.of(newUser));
+        when(itemRepository.findById(anyLong()))
+                .thenReturn(Optional.of(item));
+        assertEquals(1,
+                BookingMapper.toFullBookingFromBooking(booking, Status.WAITING, itemRepository, userRepository).getId());
+
+
     }
 
 }
