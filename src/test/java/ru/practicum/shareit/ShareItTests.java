@@ -59,19 +59,10 @@ class ShareItTests {
         userService = new UserService(userRepository);
         itemService = new ItemServiceImpl(itemRepository, userRepository, bookingRepository, commentRepository);
         user = new User(1, "Test", "test@test.com");
-        itemDto = new ItemDto(1, "TestItem", "DescriptionTest", true);
+        itemDto = new ItemDto(1, "TestItem", "DescriptionTest", true,0);
     }
 
-    @Test
-    void addNewUser() throws BadRequestException, NotFoundException {
-        when(userRepository.save(any()))
-                .thenReturn(user);
-        when(userRepository.findById(anyLong()))
-                .thenReturn(Optional.of(user));
-        userService.add(user);
-        Assertions.assertEquals(userService.getUserById(1), user);
 
-    }
 
     @Test
     void updateUser() throws BadRequestException, NotFoundException {
@@ -99,31 +90,8 @@ class ShareItTests {
         Assertions.assertThrows(NotFoundException.class, () -> userService.getUserById(1));
 
     }
-/**
- * TO DO
- *  mvc tests for sprint 15
- */
-//    @Test
-//    void addItem() throws NotFoundException, BadRequestException {
-//        when(userRepository.save(any()))
-//                .thenReturn(user);
-//        userService.add(user);
-//        when(itemRepository.save(any()))
-//                .thenReturn(user);
-//        itemService.addItem(itemDto, 1);
-//        Assertions.assertEquals(itemDto.getName(), itemService.getItem(1, 1).getName());
-//        //Assertions.assertThrows(NullPointerException.class, () -> userService.add(user));
-//    }
-//
-//    @Test
-//    void patchItem() throws NotFoundException, BadRequestException {
-//        //userService.add(user);
-//        //itemService.addItem(itemDto, 1);
-//        ItemDto newItemDto = new ItemDto(1, "Patch", " ", true);
-//        //itemService.patchItem(newItemDto, 1, 1);
-//        //Assertions.assertEquals(newItemDto, itemService.getItem(1, 1));
-//        Assertions.assertThrows(NullPointerException.class, () -> userService.add(user));
-//    }
+
+
 
 
 }

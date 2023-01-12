@@ -16,9 +16,9 @@ public interface ItemService {
 
     GetItemDto getItem(long itemId, long ownerId) throws NotFoundException;
 
-    List<GetItemDto> getAllItemsByOwner(long ownerId);
+    List<GetItemDto> getAllItemsByOwner(long ownerId, Integer from, Integer size);
 
-    List<ItemDto> searchItem(String text, long ownerId);
+    List<ItemDto> searchItem(String text, long ownerId, Integer from, Integer size);
 
     Comment addComment(Comment dto, long itemId, long authorId) throws BadRequestException;
 }
