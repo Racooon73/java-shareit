@@ -105,6 +105,23 @@ public class BookingServiceTest {
         assertThrows(NoSuchElementException.class, () -> bookingService.getBooking(1, bookerId));
 
     }
+    @Test
+    void getBookingNotFound() throws NotFoundException, BadRequestException {
+        long itemId = 1L;
+        long ownerId = 1L;
+        long bookerId = 1L;
+
+        BookingDto dto = new BookingDto(1, itemId, LocalDateTime.now(), LocalDateTime.now().plusHours(1));
+        User newUser = new User(1, "test", "test@test.com");
+        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, 0);
+        Item item = ItemMapper.toItem(itemDto, ownerId);
+
+
+        when(bookingRepository.findById(anyLong()))
+                .thenReturn(Optional.empty());
+        assertThrows(NotFoundException.class, () -> bookingService.getBooking(1, bookerId));
+
+    }
 
     @Test
     void getAllBookings() throws NotFoundException, BadRequestException {
@@ -145,6 +162,26 @@ public class BookingServiceTest {
                 BookingState.WAITING, 0, 10));
         assertThrows(NoSuchElementException.class, () -> bookingService.getAllBookingsByBookerId(1,
                 BookingState.REJECTED, 0, 10));
+
+    }
+    @Test
+    void getAllBookingsNotFoundUser() throws NotFoundException, BadRequestException {
+        long itemId = 1L;
+        long ownerId = 1L;
+        long bookerId = 1L;
+
+        BookingDto dto = new BookingDto(1, itemId, LocalDateTime.now(), LocalDateTime.now().plusHours(1));
+        User newUser = new User(1, "test", "test@test.com");
+        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, 0);
+        Item item = ItemMapper.toItem(itemDto, ownerId);
+        final Page<Item> page = new PageImpl<>(List.of(item));
+        when(userRepository.findById(anyLong()))
+                .thenReturn(Optional.empty());
+
+
+        assertThrows(NotFoundException.class, () -> bookingService.getAllBookingsByBookerId(1,
+                BookingState.ALL, 0, 10));
+
 
     }
 
@@ -189,17 +226,37 @@ public class BookingServiceTest {
     }
 
     @Test
+    void getAllBookingsByItemsNotFoundUser() throws NotFoundException, BadRequestException {
+        long itemId = 1L;
+        long ownerId = 1L;
+        long bookerId = 1L;
+
+        BookingDto dto = new BookingDto(1, itemId, LocalDateTime.now(), LocalDateTime.now().plusHours(1));
+
+        User newUser = new User(1, "test", "test@test.com");
+        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, 0);
+        Item item = ItemMapper.toItem(itemDto, ownerId);
+        final Page<Item> page = new PageImpl<>(List.of(item));
+        when(userRepository.findById(anyLong()))
+                .thenReturn(Optional.empty());
+
+
+
+        assertThrows(NotFoundException.class, () -> bookingService.getAllBookingByItemsByOwnerId(1,
+                BookingState.REJECTED, 0, 10));
+    }
+
+    @Test
     void fullBookingTest() {
         User newUser = new User(1, "test", "test@test.com");
         ItemDto itemDto = new ItemDto(1, "TestItem", "DescriptionTest", true, 0);
         Item item = ItemMapper.toItem(itemDto, 1);
         Booking booking = new Booking(1, LocalDateTime.MIN, LocalDateTime.now(), 1, 1, Status.WAITING);
         when(userRepository.findById(anyLong()))
-                .thenReturn(Optional.of(newUser));
-        when(itemRepository.findById(anyLong()))
-                .thenReturn(Optional.of(item));
-        assertEquals(1, mapper.toFullBookingFromBooking(booking,
-                Status.WAITING, itemRepository, userRepository).getId());
+                .thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class,()-> bookingService.getAllBookingByItemsByOwnerId(1,
+                BookingState.REJECTED, 0, 10));
     }
 
 }
