@@ -44,8 +44,6 @@ public class BookingServiceTest {
     private ItemRepository itemRepository;
     @InjectMocks
     BookingServiceImpl bookingService;
-    @InjectMocks
-    BookingMapper mapper;
 
     @Test
     void addBooking() throws NotFoundException, BadRequestException {
