@@ -1,11 +1,13 @@
 package ru.practicum.shareit.item.dto;
 
+import lombok.experimental.UtilityClass;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.model.Item;
 
 import java.util.List;
 
+@UtilityClass
 public class ItemMapper {
 
     public static GetItemDto toGetItemDto(Item item, Booking last, Booking near,
@@ -21,12 +23,14 @@ public class ItemMapper {
     }
 
     public static ItemDto toItemDto(Item item) {
-        return new ItemDto(item.getId(),
-                item.getName(),
-                item.getDescription(),
-                item.isAvailable()
+        return ItemDto.builder()
+                .id(item.getId())
+                .available(item.isAvailable())
+                .description(item.getDescription())
+                .name(item.getName())
+                .requestId(item.getRequestId())
+                .build();
 
-        );
     }
 
     public static Item toItem(ItemDto dto, long owner) {
@@ -35,7 +39,7 @@ public class ItemMapper {
                 dto.getDescription(),
                 dto.getAvailable(),
                 owner,
-                0
+                dto.getRequestId()
         );
     }
 

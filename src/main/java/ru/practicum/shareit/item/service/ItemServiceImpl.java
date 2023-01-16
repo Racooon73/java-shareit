@@ -2,6 +2,7 @@ package ru.practicum.shareit.item.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.booking.model.Booking;
@@ -97,10 +98,11 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<GetItemDto> getAllItemsByOwner(long ownerId) {
-
+    public List<GetItemDto> getAllItemsByOwner(long ownerId, Integer from, Integer size) {
+        PageRequest pageRequest = PageRequest.of((from / size), size);
         List<GetItemDto> allItems =
-                itemRepository.findAll().stream()
+                itemRepository.findAll(pageRequest)
+                        .stream()
                         .filter(l -> l.getOwnerId() == ownerId)
                         .map(l -> ItemMapper.toGetItemDto(l, null, null, null))
                         .sorted(Comparator.comparing(GetItemDto::getId))
@@ -134,9 +136,10 @@ public class ItemServiceImpl implements ItemService {
 
 
     @Override
-    public List<ItemDto> searchItem(String text, long ownerId) {
+    public List<ItemDto> searchItem(String text, long ownerId, Integer from, Integer size) {
         if (!text.equals("")) {
-            return itemRepository.search(text)
+            PageRequest pageRequest = PageRequest.of((from / size), size);
+            return itemRepository.search(text, pageRequest)
                     .stream()
                     .filter(Item::isAvailable)
                     .map(ItemMapper::toItemDto)
