@@ -40,7 +40,7 @@ public class RequestController {
     public ResponseEntity<Object> getRequestsPageable(@RequestHeader("X-Sharer-User-Id") long userId,
                                                       @RequestParam(required = false, defaultValue = "0")
                                                       @PositiveOrZero Integer from,
-                                                      @RequestParam(required = false, defaultValue = "1")
+                                                      @RequestParam(required = false, defaultValue = "10")
                                                       Integer size) {
         log.info("Получен запрос GET /requests/all?from=" + from + "&size=" + size);
         return requestClient.getRequestsPageable(userId, from, size);

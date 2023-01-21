@@ -39,6 +39,9 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ItemDto addItem(ItemDto dto, long ownerId) throws NotFoundException {
         log.info("Добавлен предмет");
+        if (dto.getRequestId() == 0) {
+            dto.setRequestId(null);
+        }
         if (userRepository.existsById(ownerId)) {
             return toItemDto(itemRepository.save(toItem(dto, ownerId)));
         } else {
@@ -49,6 +52,9 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ItemDto patchItem(ItemDto dto, long ownerId, long itemId) throws NotFoundException {
         dto.setId(itemId);
+        if (dto.getRequestId() == 0) {
+            dto.setRequestId(null);
+        }
         if (getItemOwnerId(itemId) != ownerId) {
             throw new NotFoundException();
         }
@@ -154,7 +160,6 @@ public class ItemServiceImpl implements ItemService {
 
 
         if (bookingRepository.bookingsForItemAndBookerPast(authorId, itemId, LocalDateTime.now()).size() != 0) {
-
 
             User author = userRepository.findById(authorId).get();
             Comment comment = new Comment();

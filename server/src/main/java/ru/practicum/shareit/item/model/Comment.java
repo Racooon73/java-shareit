@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
+@Table(name = "comments")
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,5 +21,6 @@ public class Comment {
     private long itemId;
     @Column(name = "author_id")
     private long authorId;
+    @Column(name = "author_name")
     private String authorName;
 }

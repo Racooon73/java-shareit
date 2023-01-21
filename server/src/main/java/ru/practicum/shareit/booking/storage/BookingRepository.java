@@ -51,7 +51,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             " from Booking b " +
             " join Item i on (i.id = b.itemId) " +
             " join User u on (u.id = i.ownerId)" +
-            " where i.ownerId = ?1 and b.end < ?2"
+            " where i.ownerId = ?1 and b.end <= ?2"
     )
     List<Booking> bookingsForItemPast(Long ownerId, LocalDateTime now, Pageable pageable);
 
@@ -59,7 +59,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             " from Booking b " +
             " join Item i on (i.id = b.itemId) " +
             " join User u on (u.id = i.ownerId)" +
-            " where b.bookerId = ?1 and i.id = ?2 and b.end < ?3"
+            " where b.bookerId = ?1 and i.id = ?2 and b.end <= ?3"
     )
     List<Booking> bookingsForItemAndBookerPast(Long bookerId, Long itemId, LocalDateTime now);
 

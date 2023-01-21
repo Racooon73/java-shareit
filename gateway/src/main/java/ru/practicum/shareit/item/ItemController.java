@@ -68,6 +68,7 @@ public class ItemController {
     public ResponseEntity<Object> addComment(@RequestBody @Valid Comment dto, @PathVariable long itemId,
                                              @RequestHeader("X-Sharer-User-Id") long authorId) {
         log.info("Получен запрос POST /items/" + itemId + "/comment");
+
         return itemClient.addComment(dto, itemId, authorId);
     }
 }

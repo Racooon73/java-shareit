@@ -59,7 +59,7 @@ class ShareitTest {
         userService = new UserService(userRepository);
         itemService = new ItemServiceImpl(itemRepository, userRepository, bookingRepository, commentRepository);
         user = new User(1, "Test", "test@test.com");
-        itemDto = new ItemDto(1, "TestItem", "DescriptionTest", true, 0);
+        itemDto = new ItemDto(1, "TestItem", "DescriptionTest", true, null);
     }
 
 

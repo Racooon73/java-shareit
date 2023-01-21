@@ -49,23 +49,25 @@ public class BookingController {
 
     @GetMapping
     public List<FullBookingDto> getAllBookingsByBookerId(@RequestHeader("X-Sharer-User-Id") long bookerId,
-                                                         @RequestParam(defaultValue = "ALL") BookingState state,
+                                                         @RequestParam(name = "state", defaultValue = "ALL")
+                                                         String state,
                                                          @RequestParam(required = false, defaultValue = "0") Integer from,
                                                          @RequestParam(required = false, defaultValue = "10")
                                                          Integer size) {
-        log.info("Получен запрос GET /bookings?state=" + state.toString());
-        return bookingService.getAllBookingsByBookerId(bookerId, state, from, size);
+        log.info("Получен запрос GET /bookings?state=" + state);
+        return bookingService.getAllBookingsByBookerId(bookerId, BookingState.valueOf(state), from, size);
     }
 
     @GetMapping("/owner")
     public List<FullBookingDto> getAllBookingItemsByBookerId(@RequestHeader("X-Sharer-User-Id") long ownerId,
-                                                             @RequestParam(defaultValue = "ALL") BookingState state,
+                                                             @RequestParam(name = "state", defaultValue = "ALL")
+                                                             String state,
                                                              @RequestParam(required = false, defaultValue = "0")
                                                                  Integer from,
                                                              @RequestParam(required = false, defaultValue = "10")
                                                              Integer size) {
-        log.info("Получен запрос GET /bookings/owner?state=" + state.toString());
-        return bookingService.getAllBookingByItemsByOwnerId(ownerId, state, from, size);
+        log.info("Получен запрос GET /bookings/owner?state=" + state);
+        return bookingService.getAllBookingByItemsByOwnerId(ownerId, BookingState.valueOf(state), from, size);
     }
 
 }
