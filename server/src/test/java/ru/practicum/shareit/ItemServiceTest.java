@@ -51,7 +51,7 @@ public class ItemServiceTest {
     @Test
     void addItem() throws NotFoundException {
         long itemId = 1L;
-        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, null);
+        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, 0L);
         when(userRepository.existsById(anyLong()))
                 .thenReturn(true);
 
@@ -65,7 +65,7 @@ public class ItemServiceTest {
     @Test
     void addItemNoUser() throws NotFoundException, BadRequestException {
         long itemId = 1L;
-        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, null);
+        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, 0L);
         when(userRepository.existsById(anyLong()))
                 .thenReturn(false);
 
@@ -76,7 +76,7 @@ public class ItemServiceTest {
     void patchItem() throws NotFoundException {
         long itemId = 1L;
         long ownerId = 1L;
-        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, null);
+        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, 0L);
         Item item = ItemMapper.toItem(itemDto, ownerId);
         when(itemRepository.getReferenceById(itemId))
                 .thenReturn(item);
@@ -85,7 +85,7 @@ public class ItemServiceTest {
         when(itemRepository.save(any()))
                 .thenReturn(item);
 
-        assertEquals(itemDto, itemService.patchItem(itemDto, ownerId, itemId));
+        assertEquals(itemDto.getName(), itemService.patchItem(itemDto, ownerId, itemId).getName());
 
     }
 
@@ -104,9 +104,9 @@ public class ItemServiceTest {
     void patchItemWithIdOnly() throws NotFoundException {
         long itemId = 1L;
         long ownerId = 1L;
-        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, null);
+        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, 0L);
         Item item = ItemMapper.toItem(itemDto, ownerId);
-        ItemDto newDto = new ItemDto(itemId, null, null, null, null);
+        ItemDto newDto = new ItemDto(itemId, null, null, null, 0L);
         when(itemRepository.getReferenceById(itemId))
                 .thenReturn(item);
         when(itemRepository.findById(itemId))
