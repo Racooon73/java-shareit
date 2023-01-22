@@ -15,5 +15,4 @@ public class ItemRequestDto {
 
     @NotNull
     private String description;
-
 }

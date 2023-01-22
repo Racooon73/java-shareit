@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.DefaultUriBuilderFactory;
+import ru.practicum.shareit.ErrorResponse;
 import ru.practicum.shareit.booking.dto.BookingDto;
 import ru.practicum.shareit.booking.dto.BookingState;
 import ru.practicum.shareit.client.BaseClient;
@@ -40,7 +41,15 @@ public class BookingClient extends BaseClient {
         return patch("/" + bookingId + "?approved=" + approved, bookerId);
     }
 
-    public ResponseEntity<Object> getAllBookingsByBookerId(long userId, BookingState state, Integer from, Integer size) {
+    public ResponseEntity<Object> getAllBookingsByBookerId(long userId, String stateParam, Integer from, Integer size) {
+
+        BookingState state;
+        if (BookingState.from(stateParam).isPresent()) {
+            state = BookingState.from(stateParam).get();
+        } else {
+            String error = "Unknown state" + ": " + stateParam;
+            return ResponseEntity.status(400).body(new ErrorResponse(error));
+        }
         Map<String, Object> parameters = Map.of(
                 "state", state.name(),
                 "from", from,
@@ -49,7 +58,15 @@ public class BookingClient extends BaseClient {
         return get("?state={state}&from={from}&size={size}", userId, parameters);
     }
 
-    public ResponseEntity<Object> getAllBookingByItemsByOwnerId(long ownerId, BookingState state, Integer from, Integer size) {
+    public ResponseEntity<Object> getAllBookingByItemsByOwnerId(long ownerId, String stateParam,
+                                                                Integer from, Integer size) {
+        BookingState state;
+        if (BookingState.from(stateParam).isPresent()) {
+            state = BookingState.from(stateParam).get();
+        } else {
+            String error = "Unknown state" + ": " + stateParam;
+            return ResponseEntity.status(400).body(new ErrorResponse(error));
+        }
         Map<String, Object> parameters = Map.of(
                 "state", state.name(),
                 "from", from,

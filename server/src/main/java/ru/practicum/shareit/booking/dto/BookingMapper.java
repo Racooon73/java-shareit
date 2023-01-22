@@ -11,7 +11,6 @@ import ru.practicum.shareit.user.storage.UserRepository;
 @UtilityClass
 public class BookingMapper {
 
-
     public static BookingDto toBookingDto(Booking booking) {
         return BookingDto.builder()
                 .id(booking.getId())
@@ -31,7 +30,6 @@ public class BookingMapper {
                 .status(status)
                 .build();
     }
-
 
     public static FullBookingDto toFullBookingFromBooking(Booking booking, Status status,
                                                           ItemRepository itemRepository,

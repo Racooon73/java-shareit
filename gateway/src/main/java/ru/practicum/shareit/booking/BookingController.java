@@ -53,15 +53,9 @@ public class BookingController {
                                                            @PositiveOrZero Integer from,
                                                            @RequestParam(required = false, defaultValue = "10")
                                                            Integer size) {
-        BookingState state;
-        if (BookingState.from(stateParam).isPresent()) {
-            state = BookingState.from(stateParam).get();
-        } else {
-            String error = "Unknown state" + ": " + stateParam;
-            return ResponseEntity.status(400).body(new ErrorResponse(error));
-        }
-        log.info("Получен запрос GET /bookings?state=" + state);
-        return bookingClient.getAllBookingsByBookerId(bookerId, state, from, size);
+
+        log.info("Получен запрос GET /bookings?state=" + stateParam);
+        return bookingClient.getAllBookingsByBookerId(bookerId, stateParam, from, size);
     }
 
     @GetMapping("/owner")
@@ -72,16 +66,9 @@ public class BookingController {
                                                                @PositiveOrZero Integer from,
                                                                @RequestParam(required = false, defaultValue = "10")
                                                                Integer size) {
-        BookingState state;
-        if (BookingState.from(stateParam).isPresent()) {
-            state = BookingState.from(stateParam).get();
-        } else {
-            String error = "Unknown state" + ": " + stateParam;
-            return ResponseEntity.status(400).body(new ErrorResponse(error));
-        }
 
-        log.info("Получен запрос GET /bookings/owner?state=" + state);
-        return bookingClient.getAllBookingByItemsByOwnerId(ownerId, state, from, size);
+        log.info("Получен запрос GET /bookings/owner?state=" + stateParam);
+        return bookingClient.getAllBookingByItemsByOwnerId(ownerId, stateParam, from, size);
     }
 
 }

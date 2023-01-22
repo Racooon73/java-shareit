@@ -18,9 +18,7 @@ public class Comment {
     @NotNull
     private String text;
     private LocalDateTime created;
-
     private long itemId;
-
     private long authorId;
     private String authorName;
 }
