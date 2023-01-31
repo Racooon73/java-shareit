@@ -49,12 +49,12 @@ public class BookingController {
 
     @GetMapping
     public List<FullBookingDto> getAllBookingsByBookerId(@RequestHeader("X-Sharer-User-Id") long bookerId,
-<<<<<<< HEAD:server/src/main/java/ru/practicum/shareit/booking/BookingController.java
+
                                                          @RequestParam(defaultValue = "ALL") BookingState state,
-=======
+
                                                          @RequestParam(name = "state", defaultValue = "ALL")
                                                          String state,
->>>>>>> 89d92ccb1652fb0b216b089f15f5ca410dba92cf:src/main/java/ru/practicum/shareit/booking/BookingController.java
+
                                                          @RequestParam(required = false, defaultValue = "0") Integer from,
                                                          @RequestParam(required = false, defaultValue = "10")
                                                          Integer size) {
