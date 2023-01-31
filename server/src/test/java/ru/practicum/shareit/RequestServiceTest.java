@@ -59,7 +59,7 @@ public class RequestServiceTest {
         long userId = 1L;
         long itemId = 1L;
         long ownerId = 1L;
-        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, 0);
+        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, 0L);
         Item item = ItemMapper.toItem(itemDto, ownerId);
         User newUser = new User(1, "test", "test@test.com");
         ItemRequestDto dto = new ItemRequestDto();
@@ -82,7 +82,7 @@ public class RequestServiceTest {
         long userId = 1L;
         long itemId = 1L;
         long ownerId = 1L;
-        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, 0);
+        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, 0L);
         Item item = ItemMapper.toItem(itemDto, ownerId);
         User newUser = new User(1, "test", "test@test.com");
         ItemRequestDto dto = new ItemRequestDto();
@@ -106,7 +106,7 @@ public class RequestServiceTest {
         long userId = 1L;
         long itemId = 1L;
         long ownerId = 1L;
-        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, 0);
+        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, null);
         Item item = ItemMapper.toItem(itemDto, ownerId);
         User newUser = new User(1, "test", "test@test.com");
         ItemRequestDto dto = new ItemRequestDto();

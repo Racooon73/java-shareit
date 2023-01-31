@@ -36,7 +36,7 @@ public class RequestControllerTest {
     void addRequest() throws Exception {
         final ItemRequestDto requestDto = new ItemRequestDto();
         requestDto.setDescription("test");
-        ItemDto itemDto = new ItemDto(1, "test", "testtest", true, 0);
+        ItemDto itemDto = new ItemDto(1, "test", "testtest", true, null);
 
         when(requestService.addRequest(any(), anyLong()))
                 .thenReturn(ItemRequestMapper.toItemRequest(requestDto, 1));
@@ -55,7 +55,7 @@ public class RequestControllerTest {
     void getRequests() throws Exception {
         final ItemRequestDto requestDto = new ItemRequestDto();
         requestDto.setDescription("test");
-        ItemDto itemDto = new ItemDto(1, "test", "testtest", true, 0);
+        ItemDto itemDto = new ItemDto(1, "test", "testtest", true, null);
         ItemRequest itemRequest = ItemRequestMapper.toItemRequest(requestDto, 1);
         when(requestService.getRequests(anyLong()))
                 .thenReturn(List.of(ItemRequestMapper.toGetItemRequestDto(itemRequest)));
@@ -74,7 +74,7 @@ public class RequestControllerTest {
     void getRequestsPageable() throws Exception {
         final ItemRequestDto requestDto = new ItemRequestDto();
         requestDto.setDescription("test");
-        ItemDto itemDto = new ItemDto(1, "test", "testtest", true, 0);
+        ItemDto itemDto = new ItemDto(1, "test", "testtest", true, null);
         ItemRequest itemRequest = ItemRequestMapper.toItemRequest(requestDto, 1);
         when(requestService.getRequestsPageable(anyLong(), anyInt(), anyInt()))
                 .thenReturn(List.of(ItemRequestMapper.toGetItemRequestDto(itemRequest)));
@@ -93,7 +93,7 @@ public class RequestControllerTest {
     void getRequestById() throws Exception {
         final ItemRequestDto requestDto = new ItemRequestDto();
         requestDto.setDescription("test");
-        ItemDto itemDto = new ItemDto(1, "test", "testtest", true, 0);
+        ItemDto itemDto = new ItemDto(1, "test", "testtest", true, null);
         ItemRequest itemRequest = ItemRequestMapper.toItemRequest(requestDto, 1);
         when(requestService.getRequestById(anyLong(), anyLong()))
                 .thenReturn(ItemRequestMapper.toGetItemRequestDto(itemRequest));

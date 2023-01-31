@@ -53,7 +53,7 @@ public class BookingServiceTest {
 
         BookingDto dto = new BookingDto(1, itemId, LocalDateTime.now(), LocalDateTime.now().plusHours(1));
         User newUser = new User(1, "test", "test@test.com");
-        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, 0);
+        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, null);
         Item item = ItemMapper.toItem(itemDto, ownerId);
         when(itemRepository.findById(anyLong()))
                 .thenReturn(Optional.of(item));
@@ -73,7 +73,7 @@ public class BookingServiceTest {
 
         BookingDto dto = new BookingDto(1, itemId, LocalDateTime.now(), LocalDateTime.now().plusHours(1));
         User newUser = new User(1, "test", "test@test.com");
-        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, 0);
+        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, null);
         Item item = ItemMapper.toItem(itemDto, ownerId);
 
         when(itemRepository.findById(anyLong()))
@@ -94,7 +94,7 @@ public class BookingServiceTest {
 
         BookingDto dto = new BookingDto(1, itemId, LocalDateTime.now(), LocalDateTime.now().plusHours(1));
         User newUser = new User(1, "test", "test@test.com");
-        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, 0);
+        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, null);
         Item item = ItemMapper.toItem(itemDto, ownerId);
 
 
@@ -112,7 +112,7 @@ public class BookingServiceTest {
 
         BookingDto dto = new BookingDto(1, itemId, LocalDateTime.now(), LocalDateTime.now().plusHours(1));
         User newUser = new User(1, "test", "test@test.com");
-        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, 0);
+        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, null);
         Item item = ItemMapper.toItem(itemDto, ownerId);
 
 
@@ -130,7 +130,7 @@ public class BookingServiceTest {
 
         BookingDto dto = new BookingDto(1, itemId, LocalDateTime.now(), LocalDateTime.now().plusHours(1));
         User newUser = new User(1, "test", "test@test.com");
-        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, 0);
+        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, null);
         Item item = ItemMapper.toItem(itemDto, ownerId);
         final Page<Item> page = new PageImpl<>(List.of(item));
         when(userRepository.findById(anyLong()))
@@ -172,7 +172,7 @@ public class BookingServiceTest {
 
         BookingDto dto = new BookingDto(1, itemId, LocalDateTime.now(), LocalDateTime.now().plusHours(1));
         User newUser = new User(1, "test", "test@test.com");
-        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, 0);
+        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, null);
         Item item = ItemMapper.toItem(itemDto, ownerId);
         final Page<Item> page = new PageImpl<>(List.of(item));
         when(userRepository.findById(anyLong()))
@@ -194,7 +194,7 @@ public class BookingServiceTest {
         BookingDto dto = new BookingDto(1, itemId, LocalDateTime.now(), LocalDateTime.now().plusHours(1));
 
         User newUser = new User(1, "test", "test@test.com");
-        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, 0);
+        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, null);
         Item item = ItemMapper.toItem(itemDto, ownerId);
         final Page<Item> page = new PageImpl<>(List.of(item));
         when(userRepository.findById(anyLong()))
@@ -234,7 +234,7 @@ public class BookingServiceTest {
         BookingDto dto = new BookingDto(1, itemId, LocalDateTime.now(), LocalDateTime.now().plusHours(1));
 
         User newUser = new User(1, "test", "test@test.com");
-        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, 0);
+        ItemDto itemDto = new ItemDto(itemId, "TestItem", "DescriptionTest", true, null);
         Item item = ItemMapper.toItem(itemDto, ownerId);
         final Page<Item> page = new PageImpl<>(List.of(item));
         when(userRepository.findById(anyLong()))
@@ -248,7 +248,7 @@ public class BookingServiceTest {
     @Test
     void fullBookingTest() {
         User newUser = new User(1, "test", "test@test.com");
-        ItemDto itemDto = new ItemDto(1, "TestItem", "DescriptionTest", true, 0);
+        ItemDto itemDto = new ItemDto(1, "TestItem", "DescriptionTest", true, null);
         Item item = ItemMapper.toItem(itemDto, 1);
         Booking booking = new Booking(1, LocalDateTime.MIN, LocalDateTime.now(), 1, 1, Status.WAITING);
         when(userRepository.findById(anyLong()))
@@ -261,7 +261,7 @@ public class BookingServiceTest {
     @Test
     void bookingMapperTest() {
         User newUser = new User(1, "test", "test@test.com");
-        ItemDto itemDto = new ItemDto(1, "TestItem", "DescriptionTest", true, 0);
+        ItemDto itemDto = new ItemDto(1, "TestItem", "DescriptionTest", true, null);
         Item item = ItemMapper.toItem(itemDto, 1);
         Booking booking = new Booking(1, LocalDateTime.MIN, LocalDateTime.now(), 1, 1, Status.WAITING);
         when(userRepository.findById(anyLong()))

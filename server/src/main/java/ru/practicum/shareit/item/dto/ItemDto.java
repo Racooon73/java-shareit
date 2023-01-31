@@ -20,6 +20,10 @@ public class ItemDto {
 
     private Boolean available;
 
+<<<<<<< HEAD
     private long requestId;
+=======
+    private Long requestId;
+>>>>>>> 89d92ccb1652fb0b216b089f15f5ca410dba92cf
 
 }

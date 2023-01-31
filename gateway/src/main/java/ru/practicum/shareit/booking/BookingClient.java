@@ -7,7 +7,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.DefaultUriBuilderFactory;
+<<<<<<< HEAD
 import ru.practicum.shareit.booking.dto.BookItemRequestDto;
+=======
+import ru.practicum.shareit.ErrorResponse;
+import ru.practicum.shareit.booking.dto.BookingDto;
+>>>>>>> 89d92ccb1652fb0b216b089f15f5ca410dba92cf
 import ru.practicum.shareit.booking.dto.BookingState;
 import ru.practicum.shareit.client.BaseClient;
 
@@ -27,7 +32,32 @@ public class BookingClient extends BaseClient {
         );
     }
 
+<<<<<<< HEAD
     public ResponseEntity<Object> getBookings(long userId, BookingState state, Integer from, Integer size) {
+=======
+
+    public ResponseEntity<Object> addBooking(long userId, BookingDto requestDto) {
+        return post("", userId, requestDto);
+    }
+
+    public ResponseEntity<Object> getBooking(long userId, long bookingId) {
+        return get("/" + bookingId, userId);
+    }
+
+    public ResponseEntity<Object> approveBooking(long bookingId, boolean approved, long bookerId) {
+        return patch("/" + bookingId + "?approved=" + approved, bookerId);
+    }
+
+    public ResponseEntity<Object> getAllBookingsByBookerId(long userId, String stateParam, Integer from, Integer size) {
+
+        BookingState state;
+        if (BookingState.from(stateParam).isPresent()) {
+            state = BookingState.from(stateParam).get();
+        } else {
+            String error = "Unknown state" + ": " + stateParam;
+            return ResponseEntity.status(400).body(new ErrorResponse(error));
+        }
+>>>>>>> 89d92ccb1652fb0b216b089f15f5ca410dba92cf
         Map<String, Object> parameters = Map.of(
                 "state", state.name(),
                 "from", from,
@@ -36,6 +66,7 @@ public class BookingClient extends BaseClient {
         return get("?state={state}&from={from}&size={size}", userId, parameters);
     }
 
+<<<<<<< HEAD
 
     public ResponseEntity<Object> bookItem(long userId, BookItemRequestDto requestDto) {
         return post("", userId, requestDto);
@@ -43,5 +74,22 @@ public class BookingClient extends BaseClient {
 
     public ResponseEntity<Object> getBooking(long userId, Long bookingId) {
         return get("/" + bookingId, userId);
+=======
+    public ResponseEntity<Object> getAllBookingByItemsByOwnerId(long ownerId, String stateParam,
+                                                                Integer from, Integer size) {
+        BookingState state;
+        if (BookingState.from(stateParam).isPresent()) {
+            state = BookingState.from(stateParam).get();
+        } else {
+            String error = "Unknown state" + ": " + stateParam;
+            return ResponseEntity.status(400).body(new ErrorResponse(error));
+        }
+        Map<String, Object> parameters = Map.of(
+                "state", state.name(),
+                "from", from,
+                "size", size
+        );
+        return get("/owner?state={state}&from={from}&size={size}", ownerId, parameters);
+>>>>>>> 89d92ccb1652fb0b216b089f15f5ca410dba92cf
     }
 }

@@ -12,9 +12,4 @@ import lombok.Setter;
 public class ItemRequestDto {
 
     private String description;
-<<<<<<< HEAD
 }
-=======
-
-}
->>>>>>> 89d92ccb1652fb0b216b089f15f5ca410dba92cf

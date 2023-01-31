@@ -2,7 +2,10 @@ version: '3.8'
 services:
   gateway:
     build: ./gateway
+<<<<<<< HEAD
 
+=======
+>>>>>>> 89d92ccb1652fb0b216b089f15f5ca410dba92cf
     container_name: shareit-gateway
     ports:
       - "8080:8080"

@@ -33,7 +33,7 @@ public class ItemControllerTest {
 
     @Test
     void saveNewItem() throws Exception {
-        final ItemDto itemDto = new ItemDto(1, "test", "testtest", true, 0);
+        final ItemDto itemDto = new ItemDto(1, "test", "testtest", true, null);
         when(itemService.addItem(any(), anyLong()))
                 .thenReturn(itemDto);
 
@@ -49,7 +49,7 @@ public class ItemControllerTest {
 
     @Test
     void saveNewItemNoHeader() throws Exception {
-        final ItemDto itemDto = new ItemDto(1, "test", "testtest", true, 0);
+        final ItemDto itemDto = new ItemDto(1, "test", "testtest", true, null);
         when(itemService.addItem(any(), anyLong()))
                 .thenReturn(itemDto);
 
@@ -64,7 +64,7 @@ public class ItemControllerTest {
 
     @Test
     void patchItem() throws Exception {
-        final ItemDto itemDto = new ItemDto(1, "test", "testtest", true, 0);
+        final ItemDto itemDto = new ItemDto(1, "test", "testtest", true, null);
         when(itemService.patchItem(any(), anyLong(), anyLong()))
                 .thenReturn(itemDto);
 
@@ -115,7 +115,7 @@ public class ItemControllerTest {
     @Test
     void searchAllItems() throws Exception {
         final ItemDto itemDto = new ItemDto(1, "searchItem", "testtest",
-                true, 0);
+                true, null);
         when(itemService.searchItem(anyString(), anyLong(), anyInt(), anyInt()))
                 .thenReturn(List.of(itemDto));
 

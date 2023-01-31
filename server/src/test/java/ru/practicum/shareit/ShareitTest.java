@@ -59,7 +59,11 @@ class ShareitTest {
         userService = new UserService(userRepository);
         itemService = new ItemServiceImpl(itemRepository, userRepository, bookingRepository, commentRepository);
         user = new User(1, "Test", "test@test.com");
+<<<<<<< HEAD:server/src/test/java/ru/practicum/shareit/ShareitTest.java
         itemDto = new ItemDto(1, "TestItem", "DescriptionTest", true, 0);
+=======
+        itemDto = new ItemDto(1, "TestItem", "DescriptionTest", true, null);
+>>>>>>> 89d92ccb1652fb0b216b089f15f5ca410dba92cf:src/test/java/ru/practicum/shareit/ShareItTests.java
     }
 
 

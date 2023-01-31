@@ -8,6 +8,7 @@ import lombok.*;
  */
 @Getter
 @Setter
+@ToString
 @EqualsAndHashCode
 @Builder
 @AllArgsConstructor
@@ -19,7 +20,6 @@ public class ItemDto {
     private String description;
 
     private Boolean available;
-
     private long requestId;
 
 }
