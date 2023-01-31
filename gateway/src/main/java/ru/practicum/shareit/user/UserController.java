@@ -1,9 +1,7 @@
 package ru.practicum.shareit.user;
 
-<<<<<<< HEAD
 public class UserController {
 }
-=======
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
